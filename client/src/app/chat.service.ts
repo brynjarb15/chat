@@ -54,7 +54,7 @@ export class ChatService {
 		return observable;
 	}
 
-	sendMessage(roomName: string, message: string)/*: Observable<any> */	{
+	sendMessage(roomName: string, message: string) {
 		const param = {
 			roomName: roomName,
 			msg: message
@@ -72,6 +72,23 @@ export class ChatService {
 		});
 
 		return observable;
+	}
+
+	leaveRoom(roomName: string) {
+		this.socket.emit('partroom', roomName);
+	}
+
+	getData(): Observable<any> {
+		const user = {
+			name:'hmm',
+			age: 10
+		};
+		const observable = new Observable(observer => {
+			observer.next(user);
+		});
+
+		return observable;
+
 	}
 
 }
