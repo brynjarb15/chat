@@ -1,7 +1,8 @@
 <div>The room list</div>
 <ul>
   <li *ngFor="let room of rooms">
-    <a [routerLink]="['/rooms', room]">{{room}}</a>
+    <!--<a [routerLink]="['/rooms', room]">{{room}}</a>-->
+	<a (click)="joinRoom(room)" >{{room}}</a>
   </li>
 </ul>
 

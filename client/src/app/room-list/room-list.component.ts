@@ -23,8 +23,8 @@ export class RoomListComponent implements OnInit {
 
 	onNewRoom() {
 		if (this.newRoomName.length < 1) {
-
 			// give user feedback about the errorek
+			console.log('room name cant be empty');
 			return;
 		}
 		this.chatService.addRoom(this.newRoomName).subscribe(succeeded => {
@@ -32,6 +32,12 @@ export class RoomListComponent implements OnInit {
 				this.router.navigate(['rooms', this.newRoomName]);
 			}
 		});
+	}
+
+	joinRoom(rName: string) {
+		console.log('joinRoom');
+		this.newRoomName = rName;
+		this.onNewRoom();
 	}
 
 }

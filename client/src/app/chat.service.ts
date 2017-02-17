@@ -36,7 +36,6 @@ export class ChatService {
 				observer.next(strArr);
 			});
 		});
-
 		return observable;
 	}
 
@@ -50,6 +49,26 @@ export class ChatService {
 				observer.next(a);
 			});
 
+		});
+
+		return observable;
+	}
+
+	sendMessage(roomName: string, message: string)/*: Observable<any> */	{
+		const param = {
+			roomName: roomName,
+			msg: message
+		};
+		this.socket.emit('sendmsg', param);
+	}
+
+	getMessageHistory(roomName: string): Observable<any> {
+		const observable = new Observable(observer => {
+			this.socket.on('updatechat', (rName, msgHistory) => {
+				if ( roomName === rName ) {
+					observer.next(msgHistory);
+				}
+			});
 		});
 
 		return observable;
