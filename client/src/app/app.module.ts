@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { RoomListComponent } from './room-list/room-list.component';
 import { RoomComponent } from './room/room.component';
 import { ChatService } from './chat.service';
-import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
 	declarations: [
@@ -17,7 +16,6 @@ import { UserListComponent } from './user-list/user-list.component';
 		LoginComponent,
 		RoomListComponent,
 		RoomComponent,
-		UserListComponent
 	],
 	imports: [
 		BrowserModule,
@@ -38,9 +36,6 @@ import { UserListComponent } from './user-list/user-list.component';
 		}, {
 			path: 'rooms/:id',
 			component: RoomComponent
-		}, {
-			path: "rooms/:id/users",
-			component: UserListComponent
 		}
 		])
 	],

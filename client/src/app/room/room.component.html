@@ -1,7 +1,11 @@
 <div>{{roomID}}</div>
 
-
-<button (click)="user()">user-list</button>
+<div>Active users</div>
+<ul>
+  <li *ngFor="let user of users">
+    <div>{{user}}</div>
+  </li>
+</ul>
 <button (click)="back()">Back</button>
 
 <input [(ngModel)] ="newMessage" />

@@ -44,13 +44,14 @@ export class ChatService {
 		let observable = new Observable(observer =>{
 			this.socket.on("updateusers", (room, lis, ops) =>{
 				//console.log("room: ", room);
-				//console.log("lis: ", lis);
+				console.log("lis: ", lis);
 				//console.log("ops: " , ops);
 				let strArr :string[] = [];
 				for (var x in lis){
 					console.log("everyuser: ", x)
 					strArr.push(x);
 				}
+				console.log(strArr);
 				observer.next(strArr);
 			})
 		});
@@ -91,6 +92,4 @@ export class ChatService {
 
 		return observable;
 	}
-	
-
 }
