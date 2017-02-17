@@ -112,6 +112,7 @@ io.sockets.on('connection', function (socket) {
 
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendmsg', function (data) {
+		console.log("message sent");
 		
 		var userAllowed = false;
 
@@ -122,6 +123,7 @@ io.sockets.on('connection', function (socket) {
 		if(rooms[data.roomName].ops[socket.username] !== undefined) {
 			userAllowed = true;
 		}
+		console.log(socket.username, userAllowed);
 
 		if(userAllowed) {
 			//Update the message history for the room that the user sent the message to.

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
 
 @Component({
@@ -9,14 +9,25 @@ import { ChatService } from '../chat.service';
 })
 export class RoomComponent implements OnInit {
 
-	roomID : string;
+	roomID: string;
+	newMessage: string;
+	messageHistory: any;
 
-	constructor(private chatService : ChatService,
+	constructor(private chatService: ChatService,
 				private router: Router,
 				private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.roomID = this.route.snapshot.params['id'];
+		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
+			this.messageHistory = msgHistory;
+		});
+	}
+
+	sendMessage() {
+		console.log('before send message');
+		this.chatService.sendMessage(this.roomID, this.newMessage);
+		this.newMessage = '';
 	}
 
 	back(){

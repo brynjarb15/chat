@@ -1,8 +1,14 @@
-<p>
-  room works!
-</p>
-
 <div>{{roomID}}</div>
+
 
 <button (click)="user()">user-list</button>
 <button (click)="back()">Back</button>
+
+<input [(ngModel)] ="newMessage" />
+<button (click)="sendMessage()">Send message</button>
+
+<ul>
+  <li *ngFor="let message of messageHistory">
+    <div>{{message.nick}}: {{message.message}}</div>
+  </li>
+</ul>
