@@ -33,11 +33,11 @@ export class RoomComponent implements OnInit {
 		this.chatService.sendMessage(this.roomID, this.newMessage);
 		this.newMessage = '';
 	}
-	
-	back(){
-		this.router.navigate(["../rooms"]);
+
+	back() {
+		this.router.navigate(['../rooms']);
 	}
-	getUsers(){
-		this.router.navigate(["rooms", this.roomID, "users"]);
+	getUsers() {
+		this.router.navigate(['rooms', this.roomID, 'users']);
 	}
 }

@@ -31,7 +31,9 @@ export class ChatService {
 			this.socket.on('roomlist', (lst) => {
 				const strArr: string[] = [];
 				for ( const x in lst ) {
-					strArr.push(x);
+					if (lst.hasOwnProperty(x)) {
+						strArr.push(x);
+					}
 				}
 				observer.next(strArr);
 			});
@@ -39,21 +41,23 @@ export class ChatService {
 		return observable;
 	}
 
-	getUserList() : Observable<string[]>{
-		console.log("getuserlist function!");
-		let observable = new Observable(observer =>{
-			this.socket.on("updateusers", (room, lis, ops) =>{
-				//console.log("room: ", room);
-				console.log("lis: ", lis);
-				//console.log("ops: " , ops);
-				let strArr :string[] = [];
-				for (var x in lis){
-					console.log("everyuser: ", x)
-					strArr.push(x);
+	getUserList(): Observable<string[]> {
+		console.log('getuserlist function!');
+		const observable = new Observable(observer => {
+			this.socket.on('updateusers', (room, lis, ops) => {
+				// console.log('room: ', room);
+				console.log('lis: ', lis);
+				// console.log('ops: ' , ops);
+				const strArr: string[] = [];
+				for (const x in lis) {
+					if (lis.hasOwnProperty(x)) {
+						console.log('everyuser: ', x);
+						strArr.push(x);
+					}
 				}
 				console.log(strArr);
 				observer.next(strArr);
-			})
+			});
 		});
 		return observable;
 	}
@@ -67,9 +71,7 @@ export class ChatService {
 			this.socket.emit('joinroom', param, function(a: boolean, b) {
 				observer.next(a);
 			});
-
 		});
-
 		return observable;
 	}
 
@@ -99,7 +101,7 @@ export class ChatService {
 
 	getData(): Observable<any> {
 		const user = {
-			name:'hmm',
+			name: 'hmm',
 			age: 10
 		};
 		const observable = new Observable(observer => {
@@ -108,6 +110,27 @@ export class ChatService {
 
 		return observable;
 
+	}
+	listenForPrivateMessage(): Observable<any> {
+		const observable = new Observable(observer => {
+			this.socket.on('recv_privatemsg', (username, message) => {
+				observer.next(message);
+			});
+		});
+		return observable;
+	}
+
+	sendPrivateMessage(sendTo: string, msg: string): Observable<boolean> {
+		const observable = new Observable(observer => {
+			const param = {
+				nick: sendTo,
+				message: msg
+			};
+			this.socket.emit('privatemsg', param, function(succeeded: boolean) {
+				observer.next(succeeded);
+			});
+		});
+		return observable;
 	}
 
 }
