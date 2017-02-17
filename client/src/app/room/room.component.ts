@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router'
+import { Router, ActivatedRoute} from '@angular/router';
+import { ChatService } from '../chat.service';
 
 @Component({
 	selector: 'app-room',
@@ -10,11 +11,18 @@ export class RoomComponent implements OnInit {
 
 	roomID : string;
 
-	constructor(private router: Router,
+	constructor(private chatService : ChatService,
+				private router: Router,
 				private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.roomID = this.route.snapshot.params['id'];
 	}
 
+	back(){
+		this.router.navigate(["../rooms"]);
+	}
+	user(){
+		this.router.navigate(["rooms", this.roomID, "users"]);
+	}
 }
