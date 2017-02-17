@@ -15,7 +15,7 @@ import { ChatService } from './chat.service';
 		AppComponent,
 		LoginComponent,
 		RoomListComponent,
-		RoomComponent
+		RoomComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -36,7 +36,8 @@ import { ChatService } from './chat.service';
 		}, {
 			path: 'rooms/:id',
 			component: RoomComponent
-		}])
+		}
+		])
 	],
 	providers: [ChatService],
 	bootstrap: [AppComponent]

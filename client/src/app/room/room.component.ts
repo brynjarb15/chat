@@ -12,6 +12,7 @@ export class RoomComponent implements OnInit {
 	roomID: string;
 	newMessage: string;
 	messageHistory: any;
+	users: string[];
 
 	constructor(private chatService: ChatService,
 				private router: Router,
@@ -22,6 +23,9 @@ export class RoomComponent implements OnInit {
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
 			this.messageHistory = msgHistory;
 		});
+		this.chatService.getUserList().subscribe(lis => {
+			this.users = lis;
+		});
 	}
 
 	sendMessage() {
@@ -29,5 +33,11 @@ export class RoomComponent implements OnInit {
 		this.chatService.sendMessage(this.roomID, this.newMessage);
 		this.newMessage = '';
 	}
-
+	
+	back(){
+		this.router.navigate(["../rooms"]);
+	}
+	getUsers(){
+		this.router.navigate(["rooms", this.roomID, "users"]);
+	}
 }

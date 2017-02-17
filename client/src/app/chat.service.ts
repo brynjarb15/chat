@@ -39,6 +39,25 @@ export class ChatService {
 		return observable;
 	}
 
+	getUserList() : Observable<string[]>{
+		console.log("getuserlist function!");
+		let observable = new Observable(observer =>{
+			this.socket.on("updateusers", (room, lis, ops) =>{
+				//console.log("room: ", room);
+				console.log("lis: ", lis);
+				//console.log("ops: " , ops);
+				let strArr :string[] = [];
+				for (var x in lis){
+					console.log("everyuser: ", x)
+					strArr.push(x);
+				}
+				console.log(strArr);
+				observer.next(strArr);
+			})
+		});
+		return observable;
+	}
+
 	addRoom(roomName: string): Observable<boolean> {
 		const observable = new Observable(observer => {
 			// TODO: validate that the room name is valid
@@ -92,3 +111,4 @@ export class ChatService {
 	}
 
 }
+
