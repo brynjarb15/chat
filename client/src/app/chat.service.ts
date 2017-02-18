@@ -46,7 +46,6 @@ export class ChatService {
 	getUserList(roomName: string) : Observable<any>{
 		console.log("getuserlist function!");
 		let observable = new Observable(observer =>{
-<<<<<<< HEAD
 			this.socket.on("updateusers", (room, users, ops) =>{
 				if (room === roomName){
 					console.log("lis: ", users);
@@ -68,13 +67,6 @@ export class ChatService {
 						opsList: opsList
 					};
 					observer.next(lists);
-=======
-			this.socket.on("updateusers", (room, lis, ops) =>{
-				console.log("lis: ", lis);
-				let strArr :string[] = [];
-				for (var x in lis){
-					strArr.push(x);
->>>>>>> 9fb6a11669227061a1f124bdadac3686ca5e432c
 				}
 			});
 		});
