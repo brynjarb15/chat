@@ -33,6 +33,11 @@ export class RoomComponent implements OnInit {
 		});
 	}
 
+	ngAfterViewChecked() {
+		var objDiv = document.getElementById("messageHistory");
+		objDiv.scrollTop = objDiv.scrollHeight;
+	}
+
 	sendMessage() {
 		console.log('before send message');
 		this.chatService.sendMessage(this.roomID, this.newMessage);

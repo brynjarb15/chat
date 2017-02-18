@@ -2,17 +2,18 @@
 <h2>This is {{roomID}}</h2>
 <div>Active users</div>
 <ul>
-  <li *ngFor="let user of users">
-    <div>{{user}}</div>
-  </li>
+	<li *ngFor="let user of users">
+		<div>{{user}}</div>
+	</li>
 </ul>
 <button (click)="back()">Back</button>
 <input [(ngModel)] ="newMessage" />
 <button (click)="sendMessage()">Send message</button>
-<ul>
-  <li *ngFor="let message of messageHistory">
-    <div>{{message.nick}}: {{message.message}}</div>
-  </li>
+
+<ul id="messageHistory">
+	<li *ngFor="let message of messageHistory">
+		<div>{{message.nick}}: {{message.message}}</div>
+	</li>
 </ul>
 
 <div *ngIf="true">
