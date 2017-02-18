@@ -15,6 +15,7 @@ export class RoomComponent implements OnInit {
 	users: string[];
 	ops: string[];
 	ID: any;
+	kickThisPersonOut: string;
 	
 	//currentOPS: string;
 
@@ -59,5 +60,14 @@ export class RoomComponent implements OnInit {
 		this.router.navigate(['rooms', this.roomID, 'users']);
 	}
 
-
+	kickOut(){
+		console.log("kick out");
+		console.log("person to be kicked out: ", this.kickThisPersonOut);
+		console.log("room beeing kicket out: ", this.roomID);
+		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID).subscribe(succeeded =>{
+			if(succeeded){
+				console.log(this. kickThisPersonOut, " has been kicked out");
+			}
+		});
+	}
 }
