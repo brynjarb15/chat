@@ -20,9 +20,7 @@ export class ChatService {
 				observer.next(succeeded);
 			});
 		});
-
 		return observable;
-
 	}
 
 	getRoomList(): Observable<string[]> {
@@ -39,6 +37,10 @@ export class ChatService {
 		return observable;
 	}
 
+	disconnectFromChatRoom(roomID: any){
+		this.socket.emit('partroom', roomID);
+	}
+
 	getUserList() : Observable<string[]>{
 		console.log("getuserlist function!");
 		let observable = new Observable(observer =>{
@@ -48,7 +50,7 @@ export class ChatService {
 				//console.log("ops: " , ops);
 				let strArr :string[] = [];
 				for (var x in lis){
-					console.log("everyuser: ", x)
+					//console.log("everyuser: ", x)
 					strArr.push(x);
 				}
 				console.log(strArr);
@@ -67,9 +69,7 @@ export class ChatService {
 			this.socket.emit('joinroom', param, function(a: boolean, b) {
 				observer.next(a);
 			});
-
 		});
-
 		return observable;
 	}
 
@@ -89,7 +89,6 @@ export class ChatService {
 				}
 			});
 		});
-
 		return observable;
 	}
 }

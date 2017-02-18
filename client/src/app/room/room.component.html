@@ -1,5 +1,4 @@
 <div>{{roomID}}</div>
-
 <div>Active users</div>
 <ul>
   <li *ngFor="let user of users">
@@ -7,10 +6,8 @@
   </li>
 </ul>
 <button (click)="back()">Back</button>
-
 <input [(ngModel)] ="newMessage" />
 <button (click)="sendMessage()">Send message</button>
-
 <ul>
   <li *ngFor="let message of messageHistory">
     <div>{{message.nick}}: {{message.message}}</div>
