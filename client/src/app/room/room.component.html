@@ -14,3 +14,9 @@
     <div>{{message.nick}}: {{message.message}}</div>
   </li>
 </ul>
+
+<div *ngIf="true">
+	<br>
+	<input [(ngModel)] ="kickThisPersonOut" placeholder="Username"/><br>
+	<button (click)="kickOut()">Kick Out</button>
+</div>

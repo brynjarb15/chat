@@ -47,12 +47,9 @@ export class ChatService {
 		console.log("getuserlist function!");
 		let observable = new Observable(observer =>{
 			this.socket.on("updateusers", (room, lis, ops) =>{
-				//console.log("room: ", room);
 				console.log("lis: ", lis);
-				//console.log("ops: " , ops);
 				let strArr :string[] = [];
 				for (var x in lis){
-					//console.log("everyuser: ", x)
 					strArr.push(x);
 				}
 				console.log(strArr);
@@ -127,6 +124,17 @@ export class ChatService {
 		});
 		return observable;
 	}
-
+	kickPersonOut(name: string, ID: string): Observable<boolean>{
+		const observable = new Observable(observer =>{
+			const param = {
+				username: name,
+				roomID: ID
+			}
+			console.log("kick person out function");
+			this.socket.emit("kick", param, function(succeeded: boolean){
+				observer.next(succeeded);
+			});
+		});
+		return observable;
+	}
 }
-
