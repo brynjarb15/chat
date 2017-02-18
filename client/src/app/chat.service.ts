@@ -20,9 +20,7 @@ export class ChatService {
 				observer.next(succeeded);
 			});
 		});
-
 		return observable;
-
 	}
 
 	getRoomList(): Observable<string[]> {
@@ -41,19 +39,21 @@ export class ChatService {
 		return observable;
 	}
 
-	getUserList(): Observable<string[]> {
-		console.log('getuserlist function!');
-		const observable = new Observable(observer => {
-			this.socket.on('updateusers', (room, lis, ops) => {
-				// console.log('room: ', room);
-				console.log('lis: ', lis);
-				// console.log('ops: ' , ops);
-				const strArr: string[] = [];
-				for (const x in lis) {
-					if (lis.hasOwnProperty(x)) {
-						console.log('everyuser: ', x);
-						strArr.push(x);
-					}
+	disconnectFromChatRoom(roomID: any){
+		this.socket.emit('partroom', roomID);
+	}
+
+	getUserList() : Observable<string[]>{
+		console.log("getuserlist function!");
+		let observable = new Observable(observer =>{
+			this.socket.on("updateusers", (room, lis, ops) =>{
+				//console.log("room: ", room);
+				console.log("lis: ", lis);
+				//console.log("ops: " , ops);
+				let strArr :string[] = [];
+				for (var x in lis){
+					//console.log("everyuser: ", x)
+					strArr.push(x);
 				}
 				console.log(strArr);
 				observer.next(strArr);
@@ -91,12 +91,7 @@ export class ChatService {
 				}
 			});
 		});
-
 		return observable;
-	}
-
-	leaveRoom(roomName: string) {
-		this.socket.emit('partroom', roomName);
 	}
 
 	getData(): Observable<any> {

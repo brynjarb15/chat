@@ -13,6 +13,9 @@ export class RoomComponent implements OnInit {
 	newMessage: string;
 	messageHistory: any;
 	users: string[];
+	ID: any;
+	
+	//currentOPS: string;
 
 	constructor(private chatService: ChatService,
 				private router: Router,
@@ -20,6 +23,7 @@ export class RoomComponent implements OnInit {
 
 	ngOnInit() {
 		this.roomID = this.route.snapshot.params['id'];
+
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
 			this.messageHistory = msgHistory;
 		});
@@ -38,10 +42,17 @@ export class RoomComponent implements OnInit {
 		this.chatService.sendMessage(this.roomID, this.newMessage);
 		this.newMessage = '';
 	}
-
-	back() {
-		this.router.navigate(['../rooms']);
+	
+	back(){
+		this.chatService.disconnectFromChatRoom(this.roomID);
+		this.router.navigate(["../rooms"]);
+		this.chatService.getUserList().subscribe(lis => {
+			this.users = lis;
+		});
+		//this.currentOPS = this.route.snapshot.params['ops']
+		console.log("back: ",this.users);
 	}
+	
 	getUsers() {
 		this.router.navigate(['rooms', this.roomID, 'users']);
 	}
