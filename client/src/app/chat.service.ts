@@ -37,7 +37,7 @@ export class ChatService {
 					if (lst.hasOwnProperty(x)) {
 						strArr.push(x);
 					}
-				}s
+				}
 				observer.next(strArr);
 			});
 		});
@@ -157,11 +157,13 @@ export class ChatService {
 		return observable;
 	}
 
-	redirectKickedPerson(room: string, user: string, username: string): Observable<any>{
-		console.log("redirect ", username);
+	redirectKickedPerson(roomName: string, user: string): Observable<any>{
+		console.log("redirect ", this.userName);
 		const observable = new Observable(observer => {
 			this.socket.on('kicked', (room, user, username) => {
-				
+				if (roomName === room) {
+					observer.next(user);
+				}
 			});
 		});
 		return observable;

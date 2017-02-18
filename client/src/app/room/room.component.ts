@@ -19,6 +19,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	obs: string;
 	username: string;
 	
+	
 	constructor(private chatService: ChatService,
 				private router: Router,
 				private route: ActivatedRoute) { }
@@ -32,6 +33,15 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		this.chatService.getUserList(this.roomID).subscribe(lists => {
 			this.users = lists.usersList;
 			this.ops = lists.opsList;
+		});
+		this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut).subscribe(user => {
+			console.log(this.chatService.userName);
+			if (this.chatService.userName === user) {
+				this.router.navigate(["../rooms"]);
+			}
+			else {
+				//TODO: láta alla vita
+			}
 		});
 	}
 
@@ -62,14 +72,9 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	}
 
 	kickOut(){
-		console.log("kick out");
-		console.log("person to be kicked out: ", this.kickThisPersonOut);
-		console.log("room beeing kicket out: ", this.roomID);
-		console.log("Observer kicking out user: ", this.username);
 		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID).subscribe(succeeded =>{
 			if(succeeded){
 				console.log(this. kickThisPersonOut, " has been kicked out");
-				this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut, this.username);			
 			}
 		});
 	}
