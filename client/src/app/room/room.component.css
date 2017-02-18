@@ -1,0 +1,7 @@
+#messageHistory {
+	height:100px; 
+	width:30%;
+	overflow:hidden;
+	overflow-y:scroll;
+}
+
