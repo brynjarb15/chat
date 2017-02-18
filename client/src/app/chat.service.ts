@@ -143,7 +143,18 @@ export class ChatService {
 		});
 		return observable;
 	}
-
+	banPerson(name: string, ID: string): Observable<boolean>{
+		const observable = new Observable(observer =>{
+			const param = {
+				user: name,
+				room: ID
+			}
+			this.socket.emit("ban", param, function(succeeded: boolean){
+				observer.next(succeeded);
+			});
+		});
+		return observable;
+	}
 	kickPersonOut(name: string, ID: string): Observable<boolean>{
 		const observable = new Observable(observer =>{
 			const param = {
@@ -158,9 +169,19 @@ export class ChatService {
 	}
 
 	redirectKickedPerson(roomName: string, user: string): Observable<any>{
-		console.log("redirect ", this.userName);
 		const observable = new Observable(observer => {
 			this.socket.on('kicked', (room, user, username) => {
+				if (roomName === room) {
+					observer.next(user);
+				}
+			});
+		});
+		return observable;
+	}
+
+	redirectBannedPerson(roomName: string, user: string): Observable<any>{
+		const observable = new Observable(observer => {
+			this.socket.on('banned', (room, user, username) => {
 				if (roomName === room) {
 					observer.next(user);
 				}
