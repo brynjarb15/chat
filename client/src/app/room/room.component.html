@@ -1,4 +1,3 @@
-<div>{{roomID}}</div>
 <h2>This is {{roomID}}</h2>
 
 <div>Ops</div>
@@ -14,9 +13,9 @@
 		<div>{{user}}</div>
 	</li>
 </ul>
-<button (click)="back()">Back</button>
+<button class="btn btn-default" (click)="back()">Leave</button>
 <input [(ngModel)] ="newMessage" />
-<button (click)="sendMessage()">Send message</button>
+<button class="btn btn-default" (click)="sendMessage()">Send message</button>
 
 <ul id="messageHistory">
 	<li *ngFor="let message of messageHistory">
@@ -24,14 +23,25 @@
 	</li>
 </ul>
 
-<div *ngIf="true">
-	<br>
-	<input [(ngModel)] ="kickThisPersonOut" placeholder="Username"/><br>
-	<button (click)="kickOut()">Kick Out</button>
+<div>
+	<select [(ngModel)]="banOrKick">
+		<option *ngFor="let user of users" [value]="user">{{user}}</option>
+	</select>
+	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
+	<button class="btn btn-default" (click)="ban()">Ban</button>
 </div>
 
-<div *ngIf="true">
+
+
+
+<!--div *ngIf="true">
+	<br>
+	<input [(ngModel)] ="banOrKick" placeholder="Username"/><br>
+	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
+</div-->
+
+<!--div *ngIf="true">
 	<br>
 	<input [(ngModel)] ="banThisPerson" placeholder="Username"/><br>
-	<button (click)="ban()">Ban</button>
-</div>
+	<button class="btn btn-default" (click)="ban()">Ban</button>
+</div-->

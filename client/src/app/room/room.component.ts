@@ -14,11 +14,8 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	messageHistory: any;
 	users: string[];
 	ops: string[];
-	ID: any;
-	kickThisPersonOut: string;
-	obs: string;
 	username: string;
-	banThisPerson: string;
+	banOrKick: string;
 	
 	
 	constructor(private chatService: ChatService,
@@ -26,6 +23,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 				private route: ActivatedRoute) { }
 
 	ngOnInit() {
+		console.log(this.banOrKick);
 		this.roomID = this.route.snapshot.params['id'];
 
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
@@ -35,8 +33,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 			this.users = lists.usersList;
 			this.ops = lists.opsList;
 		});
-		this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut).subscribe(user => {
-			console.log(this.chatService.userName);
+		this.chatService.redirectKickedPerson(this.roomID, this.banOrKick).subscribe(user => {
 			if (this.chatService.userName === user) {
 				this.router.navigate(["../rooms"]);
 			}
@@ -44,7 +41,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 				//TODO: láta alla vita
 			}
 		});
-		this.chatService.redirectBannedPerson(this.roomID, this.banThisPerson).subscribe(user => {
+		this.chatService.redirectBannedPerson(this.roomID, this.banOrKick).subscribe(user => {
 			console.log(this.chatService.userName);
 			if (this.chatService.userName === user) {
 				this.router.navigate(["../rooms"]);
@@ -69,11 +66,6 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	back(){
 		this.chatService.disconnectFromChatRoom(this.roomID);
 		this.router.navigate(["../rooms"]);
-		/*this.chatService.getUserList(this.roomID).subscribe(lis => {
-			this.users = lis;
-		});
-		});*/
-		//this.currentOPS = this.route.snapshot.params['ops']
 		console.log("back: ",this.users);
 	}
 
@@ -82,16 +74,16 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	}
 
 	kickOut(){
-		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID).subscribe(succeeded =>{
+		this.chatService.kickPersonOut(this.banOrKick, this.roomID).subscribe(succeeded =>{
 			if(succeeded){
-				console.log(this.kickThisPersonOut, " has been kicked out");
+				console.log(this.banOrKick, " has been kicked out");
 			}
 		});
 	}
 	ban(){
-		this.chatService.banPerson(this.banThisPerson, this.roomID).subscribe(succeeded =>{
+		this.chatService.banPerson(this.banOrKick, this.roomID).subscribe(succeeded =>{
 			if(succeeded){
-				console.log(this.banThisPerson, " has been banned");
+				console.log(this.banOrKick, " has been banned");
 			}
 		});
 	}

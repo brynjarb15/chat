@@ -1,5 +1,5 @@
 <h1>
-  My Chat App
+  Chat App
 </h1>
 
 <router-outlet></router-outlet>
@@ -7,7 +7,7 @@
 	<br>
 	<input [(ngModel)] ="sendPrivateMessageTo" placeholder="Username"/><br>
 	<input [(ngModel)] ="privateMessage" placeholder="Message"/><br>
-	<button (click)="sendPrivateMsg()">Send private message</button>
+	<button class="btn btn-default" (click)="sendPrivateMsg()">Send private message</button>
 
 	<div>Private message</div>
 	<div>{{newestPrivateMessage}}</div>
