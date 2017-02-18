@@ -18,6 +18,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	kickThisPersonOut: string;
 	obs: string;
 	username: string;
+	banThisPerson: string;
 	
 	
 	constructor(private chatService: ChatService,
@@ -35,6 +36,15 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 			this.ops = lists.opsList;
 		});
 		this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut).subscribe(user => {
+			console.log(this.chatService.userName);
+			if (this.chatService.userName === user) {
+				this.router.navigate(["../rooms"]);
+			}
+			else {
+				//TODO: láta alla vita
+			}
+		});
+		this.chatService.redirectBannedPerson(this.roomID, this.banThisPerson).subscribe(user => {
 			console.log(this.chatService.userName);
 			if (this.chatService.userName === user) {
 				this.router.navigate(["../rooms"]);
@@ -74,7 +84,14 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	kickOut(){
 		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID).subscribe(succeeded =>{
 			if(succeeded){
-				console.log(this. kickThisPersonOut, " has been kicked out");
+				console.log(this.kickThisPersonOut, " has been kicked out");
+			}
+		});
+	}
+	ban(){
+		this.chatService.banPerson(this.banThisPerson, this.roomID).subscribe(succeeded =>{
+			if(succeeded){
+				console.log(this.banThisPerson, " has been banned");
 			}
 		});
 	}
