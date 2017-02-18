@@ -29,7 +29,9 @@ export class ChatService {
 			this.socket.on('roomlist', (lst) => {
 				const strArr: string[] = [];
 				for ( const x in lst ) {
-					strArr.push(x);
+					if (lst.hasOwnProperty(x)) {
+						strArr.push(x);
+					}
 				}
 				observer.next(strArr);
 			});
@@ -55,7 +57,7 @@ export class ChatService {
 				}
 				console.log(strArr);
 				observer.next(strArr);
-			})
+			});
 		});
 		return observable;
 	}
@@ -73,7 +75,7 @@ export class ChatService {
 		return observable;
 	}
 
-	sendMessage(roomName: string, message: string)/*: Observable<any> */	{
+	sendMessage(roomName: string, message: string) {
 		const param = {
 			roomName: roomName,
 			msg: message
@@ -91,4 +93,40 @@ export class ChatService {
 		});
 		return observable;
 	}
+
+	getData(): Observable<any> {
+		const user = {
+			name: 'hmm',
+			age: 10
+		};
+		const observable = new Observable(observer => {
+			observer.next(user);
+		});
+
+		return observable;
+
+	}
+	listenForPrivateMessage(): Observable<any> {
+		const observable = new Observable(observer => {
+			this.socket.on('recv_privatemsg', (username, message) => {
+				observer.next(message);
+			});
+		});
+		return observable;
+	}
+
+	sendPrivateMessage(sendTo: string, msg: string): Observable<boolean> {
+		const observable = new Observable(observer => {
+			const param = {
+				nick: sendTo,
+				message: msg
+			};
+			this.socket.emit('privatemsg', param, function(succeeded: boolean) {
+				observer.next(succeeded);
+			});
+		});
+		return observable;
+	}
+
 }
+

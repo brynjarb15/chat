@@ -44,12 +44,11 @@ export class RoomComponent implements OnInit {
 		this.chatService.getUserList().subscribe(lis => {
 			this.users = lis;
 		});
-		
 		//this.currentOPS = this.route.snapshot.params['ops']
 		console.log("back: ",this.users);
-		
 	}
-	getUsers(){
-		this.router.navigate(["rooms", this.roomID, "users"]);
+	
+	getUsers() {
+		this.router.navigate(['rooms', this.roomID, 'users']);
 	}
 }
