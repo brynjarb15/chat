@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
 
@@ -7,7 +7,7 @@ import { ChatService } from '../chat.service';
 	templateUrl: './room.component.html',
 	styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, AfterViewChecked {
 
 	roomID: string;
 	newMessage: string;
@@ -16,8 +16,7 @@ export class RoomComponent implements OnInit {
 	ops: string[];
 	ID: any;
 	kickThisPersonOut: string;
-	
-	//currentOPS: string;
+
 
 	constructor(private chatService: ChatService,
 				private router: Router,
@@ -36,7 +35,7 @@ export class RoomComponent implements OnInit {
 	}
 
 	ngAfterViewChecked() {
-		var objDiv = document.getElementById("messageHistory");
+		const objDiv = document.getElementById('messageHistory');
 		objDiv.scrollTop = objDiv.scrollHeight;
 	}
 
@@ -45,7 +44,7 @@ export class RoomComponent implements OnInit {
 		this.chatService.sendMessage(this.roomID, this.newMessage);
 		this.newMessage = '';
 	}
-	
+
 	back(){
 		this.chatService.disconnectFromChatRoom(this.roomID);
 		this.router.navigate(["../rooms"]);
@@ -55,7 +54,7 @@ export class RoomComponent implements OnInit {
 		//this.currentOPS = this.route.snapshot.params['ops']
 		console.log("back: ",this.users);
 	}
-	
+
 	getUsers() {
 		this.router.navigate(['rooms', this.roomID, 'users']);
 	}
