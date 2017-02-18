@@ -43,20 +43,31 @@ export class ChatService {
 		this.socket.emit('partroom', roomID);
 	}
 
-	getUserList() : Observable<string[]>{
+	getUserList(roomName: string) : Observable<any>{
 		console.log("getuserlist function!");
 		let observable = new Observable(observer =>{
-			this.socket.on("updateusers", (room, lis, ops) =>{
-				//console.log("room: ", room);
-				console.log("lis: ", lis);
-				//console.log("ops: " , ops);
-				let strArr :string[] = [];
-				for (var x in lis){
-					//console.log("everyuser: ", x)
-					strArr.push(x);
+			this.socket.on("updateusers", (room, users, ops) =>{
+				if (room === roomName){
+					console.log("lis: ", users);
+					console.log("ops: ", ops);
+					let usersList: string[] = [];
+					let opsList: string[] = [];
+					for (var i in users) {
+						if (users.hasOwnProperty(i)) {
+							usersList.push(i);
+						}
+					}
+					for (var j in ops) {
+						if (ops.hasOwnProperty(j)) {
+							opsList.push(j);
+						}
+					}
+					const lists = {
+						usersList: usersList,
+						opsList: opsList
+					};
+					observer.next(lists);
 				}
-				console.log(strArr);
-				observer.next(strArr);
 			});
 		});
 		return observable;

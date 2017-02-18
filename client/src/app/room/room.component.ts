@@ -13,6 +13,7 @@ export class RoomComponent implements OnInit {
 	newMessage: string;
 	messageHistory: any;
 	users: string[];
+	ops: string[];
 	ID: any;
 	
 	//currentOPS: string;
@@ -27,8 +28,9 @@ export class RoomComponent implements OnInit {
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
 			this.messageHistory = msgHistory;
 		});
-		this.chatService.getUserList().subscribe(lis => {
-			this.users = lis;
+		this.chatService.getUserList(this.roomID).subscribe(lists => {
+			this.users = lists.usersList;
+			this.ops = lists.opsList;
 		});
 	}
 
@@ -46,9 +48,9 @@ export class RoomComponent implements OnInit {
 	back(){
 		this.chatService.disconnectFromChatRoom(this.roomID);
 		this.router.navigate(["../rooms"]);
-		this.chatService.getUserList().subscribe(lis => {
+		/*this.chatService.getUserList(this.roomID).subscribe(lis => {
 			this.users = lis;
-		});
+		});*/
 		//this.currentOPS = this.route.snapshot.params['ops']
 		console.log("back: ",this.users);
 	}
