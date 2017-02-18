@@ -9,15 +9,20 @@ import { Router} from '@angular/router';
 export class RoomListComponent implements OnInit {
 
 	rooms: string[];
-	newRoomName: string;
+	allUsers: string[];
+	newRoomName = '';
 
 	constructor(private chatService: ChatService,
 				private router: Router) { }
 
 
 	ngOnInit() {
-		this.chatService.getRoomList().subscribe(lst => {
-			this.rooms = lst;
+		this.chatService.getRoomList().subscribe(roomList => {
+			this.rooms = roomList;
+		});
+
+		this.chatService.getAllUsers().subscribe(userList => {
+			this.allUsers = userList;
 		});
 	}
 

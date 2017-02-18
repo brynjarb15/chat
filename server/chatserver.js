@@ -16,6 +16,23 @@ var users = {};
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
 
+
+//Took this code from down below and put it into a function so it would not have to be repeated
+function getUsersAsList() {
+		//console.log('is this working');
+		var userlist = [];
+
+		//We need to construct the list since the users in the global user roster have a reference to socket, which has a reference
+		//back to users so the JSON serializer can't serialize them.
+		for(var user in users) {
+			userlist.push(user);
+		}
+		return userlist;
+		
+		
+}
+
+
 io.sockets.on('connection', function (socket) {
 
 	//This gets performed when a user joins the server.
@@ -29,6 +46,13 @@ io.sockets.on('connection', function (socket) {
 			users[username] = { username: socket.username, channels: {}, socket: this };
 			console.log("User added: " + username);
 			fn(true); // Callback, user name was available
+			
+			
+			//Added this so the userlist will be refreshed when someone is logged in
+			const userlist = getUsersAsList();
+			io.sockets.emit('userlist', userlist);
+			
+
 		}
 		else {
 			console.log("User " + username + " already present!");
@@ -272,6 +296,11 @@ io.sockets.on('connection', function (socket) {
 
 	//Returns a list of all connected users.
 	socket.on('users', function() {
+		const userlist = getUsersAsList();
+
+		//Do not need this anymore because of the function getUsersAsList
+		/*
+		console.log("Requesting a list of userss");
 		var userlist = [];
 
 		//We need to construct the list since the users in the global user roster have a reference to socket, which has a reference
@@ -279,6 +308,7 @@ io.sockets.on('connection', function (socket) {
 		for(var user in users) {
 			userlist.push(user);
 		}
+		*/
 		socket.emit('userlist', userlist);
 	});
 

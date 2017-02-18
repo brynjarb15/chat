@@ -8,3 +8,11 @@
 
 <input [(ngModel)] ="newRoomName" />
 <button class="btn btn-default" (click)="onNewRoom()">Add new room</button>
+
+<div>All connected users</div>
+<ul>
+  <li *ngFor="let user of allUsers">
+	<a>{{user}}</a>
+  </li>
+</ul>
+

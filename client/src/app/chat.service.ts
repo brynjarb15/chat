@@ -44,6 +44,16 @@ export class ChatService {
 		return observable;
 	}
 
+	getAllUsers(): Observable<string[]> {
+		const observable = new Observable(observer => {
+			this.socket.emit('users');
+			this.socket.on('userlist', (allUserslist) => {
+				observer.next(allUserslist);
+			});
+		});
+		return observable;
+	}
+
 	disconnectFromChatRoom(roomID: any) {
 		this.socket.emit('partroom', roomID);
 	}
@@ -160,7 +170,7 @@ export class ChatService {
 			const param = {
 				user: name,
 				room: ID
-			}
+			};
 			this.socket.emit("kick", param, function(succeeded: boolean){
 				observer.next(succeeded);
 			});
