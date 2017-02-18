@@ -124,17 +124,27 @@ export class ChatService {
 		});
 		return observable;
 	}
-	kickPersonOut(name: string, ID: string): Observable<boolean>{
+
+	kickPersonOut(name: string, ID: string, obs: string): Observable<boolean>{
 		const observable = new Observable(observer =>{
 			const param = {
 				user: name,
-				room: ID
+				room: ID,
+				username: obs
 			}
-			console.log("kick person out function");
 			this.socket.emit("kick", param, function(succeeded: boolean){
 				observer.next(succeeded);
 			});
 		});
 		return observable;
 	}
+
+	/*redirectKickedPerson(): Observable<any>{
+		const observable = new Observable(observer => {
+			this.socket.on('kicked', (room, user, username) => {
+				
+			});
+		});
+		return Observable;
+	}*/
 }
