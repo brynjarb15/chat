@@ -1,6 +1,14 @@
 <div>{{roomID}}</div>
 <h2>This is {{roomID}}</h2>
-<div>Active users</div>
+
+<div>Ops</div>
+<ul>
+	<li *ngFor="let op of ops">
+		<div>{{op}}</div>
+	</li>
+</ul>
+
+<div>Users</div>
 <ul>
 	<li *ngFor="let user of users">
 		<div>{{user}}</div>
