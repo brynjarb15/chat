@@ -127,8 +127,8 @@ export class ChatService {
 	kickPersonOut(name: string, ID: string): Observable<boolean>{
 		const observable = new Observable(observer =>{
 			const param = {
-				username: name,
-				roomID: ID
+				user: name,
+				room: ID
 			}
 			console.log("kick person out function");
 			this.socket.emit("kick", param, function(succeeded: boolean){
