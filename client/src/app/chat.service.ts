@@ -6,12 +6,17 @@ import {Observable} from 'rxjs/Observable';
 export class ChatService {
 
 	socket: any;
+	userName: string;
 
 	constructor() {
 		this.socket = io('http://localhost:8080/');
 		this.socket.on('connect', function(){
 			console.log('connect');
 		});
+	}
+
+	setUserName(userName: string) {
+		this.userName = userName;
 	}
 
 	login(userName: string): Observable<boolean> {
@@ -32,32 +37,32 @@ export class ChatService {
 					if (lst.hasOwnProperty(x)) {
 						strArr.push(x);
 					}
-				}
+				}s
 				observer.next(strArr);
 			});
 		});
 		return observable;
 	}
 
-	disconnectFromChatRoom(roomID: any){
+	disconnectFromChatRoom(roomID: any) {
 		this.socket.emit('partroom', roomID);
 	}
 
-	getUserList(roomName: string) : Observable<any>{
-		console.log("getuserlist function!");
-		let observable = new Observable(observer =>{
-			this.socket.on("updateusers", (room, users, ops) =>{
-				if (room === roomName){
-					console.log("lis: ", users);
-					console.log("ops: ", ops);
-					let usersList: string[] = [];
-					let opsList: string[] = [];
-					for (var i in users) {
+	getUserList(roomName: string): Observable<any> {
+		console.log('getuserlist function!');
+		const observable = new Observable(observer => {
+			this.socket.on('updateusers', (room, users, ops) => {
+				if (room === roomName) {
+					console.log('lis: ', users);
+					console.log('ops: ', ops);
+					const usersList: string[] = [];
+					const opsList: string[] = [];
+					for (const i in users) {
 						if (users.hasOwnProperty(i)) {
 							usersList.push(i);
 						}
 					}
-					for (var j in ops) {
+					for (const j in ops) {
 						if (ops.hasOwnProperty(j)) {
 							opsList.push(j);
 						}
@@ -162,3 +167,4 @@ export class ChatService {
 		return observable;
 	}
 }
+
