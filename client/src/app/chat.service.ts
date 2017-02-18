@@ -139,12 +139,11 @@ export class ChatService {
 		return observable;
 	}
 
-	kickPersonOut(name: string, ID: string, obs: string): Observable<boolean>{
+	kickPersonOut(name: string, ID: string): Observable<boolean>{
 		const observable = new Observable(observer =>{
 			const param = {
 				user: name,
-				room: ID,
-				username: obs
+				room: ID
 			}
 			this.socket.emit("kick", param, function(succeeded: boolean){
 				observer.next(succeeded);
@@ -153,12 +152,13 @@ export class ChatService {
 		return observable;
 	}
 
-	/*redirectKickedPerson(): Observable<any>{
+	redirectKickedPerson(room: string, user: string, username: string): Observable<any>{
+		console.log("redirect ", username);
 		const observable = new Observable(observer => {
 			this.socket.on('kicked', (room, user, username) => {
 				
 			});
 		});
-		return Observable;
-	}*/
+		return observable;
+	}
 }

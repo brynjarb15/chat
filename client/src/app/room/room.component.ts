@@ -17,6 +17,7 @@ export class RoomComponent implements OnInit {
 	ID: any;
 	kickThisPersonOut: string;
 	obs: string;
+	username: string;
 	
 	constructor(private chatService: ChatService,
 				private router: Router,
@@ -64,10 +65,11 @@ export class RoomComponent implements OnInit {
 		console.log("kick out");
 		console.log("person to be kicked out: ", this.kickThisPersonOut);
 		console.log("room beeing kicket out: ", this.roomID);
-		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID, this.obs).subscribe(succeeded =>{
+		console.log("Observer kicking out user: ", this.username);
+		this.chatService.kickPersonOut(this.kickThisPersonOut, this.roomID).subscribe(succeeded =>{
 			if(succeeded){
 				console.log(this. kickThisPersonOut, " has been kicked out");
-				//redirecta manneskjunni sem var hent út á annan stað
+				this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut, this.username);			
 			}
 		});
 	}
