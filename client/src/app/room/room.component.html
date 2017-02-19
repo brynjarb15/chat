@@ -24,12 +24,13 @@
 		</li>
 	</ul>
 </div>
-<div class="kickBan">
+<div class="kickBan" *ngIf="IAmAnOp">
 	<select class="kOrbInput" [(ngModel)]="banOrKick">
 		<option *ngFor="let user of users" [value]="user">{{user}}</option>
 	</select>
 	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
 	<button class="btn btn-default" (click)="ban()">Ban</button>
-	<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
 </div>
 <button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
+<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
+

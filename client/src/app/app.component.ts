@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 	constructor(private chatService: ChatService,
 				private toastrService: ToastrService,
 				private toastrConfig: ToastrConfig) {
-					// toastrConfig.timeOut = 100000;
+					toastrConfig.preventDuplicates = true;
 	}
 
 	ngOnInit() {
