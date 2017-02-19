@@ -12,9 +12,6 @@ export class AppComponent implements OnInit {
 	@ViewChild(ToastContainerDirective) toastContainer: any;
 
 	title = 'app works!';
-	privateMessage: string;
-	sendPrivateMessageTo: string;
-	newestPrivateMessage: string;
 
 	constructor(private chatService: ChatService,
 				private toastrService: ToastrService,
@@ -23,21 +20,7 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.chatService.listenForPrivateMessage().subscribe(message => {
-			this.newestPrivateMessage = message;
-		});
 		// this.toastrService.overlayContainer = this.toastContainer;
-	}
-
-
-	sendPrivateMsg() {
-		this.chatService.sendPrivateMessage(this.sendPrivateMessageTo, this.privateMessage).subscribe(succeeded => {
-			if ( succeeded ) {
-				console.log('Private message was sent to', this.sendPrivateMessageTo);
-			} else {
-				console.log('Private message was not sent to ', this.sendPrivateMessageTo);
-			}
-		});	
 	}
 
 

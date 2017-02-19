@@ -153,32 +153,32 @@ export class ChatService {
 		});
 		return observable;
 	}
-	banPerson(name: string, ID: string): Observable<boolean>{
-		const observable = new Observable(observer =>{
+	banPerson(name: string, ID: string): Observable<boolean> {
+		const observable = new Observable(observer => {
 			const param = {
 				user: name,
 				room: ID
-			}
-			this.socket.emit("ban", param, function(succeeded: boolean){
+			};
+			this.socket.emit('ban', param, function(succeeded: boolean){
 				observer.next(succeeded);
 			});
 		});
 		return observable;
 	}
-	kickPersonOut(name: string, ID: string): Observable<boolean>{
-		const observable = new Observable(observer =>{
+	kickPersonOut(name: string, ID: string): Observable<boolean> {
+		const observable = new Observable(observer => {
 			const param = {
 				user: name,
 				room: ID
 			};
-			this.socket.emit("kick", param, function(succeeded: boolean){
+			this.socket.emit('kick', param, function(succeeded: boolean){
 				observer.next(succeeded);
 			});
 		});
 		return observable;
 	}
 
-	redirectKickedPerson(roomName: string, user: string): Observable<any>{
+	redirectKickedPerson(roomName: string): Observable<any> {
 		const observable = new Observable(observer => {
 			this.socket.on('kicked', (room, user, username) => {
 				if (roomName === room) {
@@ -189,7 +189,7 @@ export class ChatService {
 		return observable;
 	}
 
-	redirectBannedPerson(roomName: string, user: string): Observable<any>{
+	redirectBannedPerson(roomName: string): Observable<any> {
 		const observable = new Observable(observer => {
 			this.socket.on('banned', (room, user, username) => {
 				if (roomName === room) {
