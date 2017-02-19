@@ -217,7 +217,8 @@ export class ChatService {
 						if (this.userName !== userJoining) {
 							const param = {
 								info: info,
-								user: userJoining
+								user: userJoining,
+								room: room
 							};
 							observer.next(param);
 						}

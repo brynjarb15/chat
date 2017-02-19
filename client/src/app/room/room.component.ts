@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
-import { ToastrService, ToastContainerDirective, ToastrConfig} from 'ngx-toastr';
+import { ToastrService} from 'ngx-toastr';
 
 @Component({
 	selector: 'app-room',
@@ -19,9 +19,9 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	IAmAnOp = false;
 	banOrKick: string;
 	constructor(private chatService: ChatService,
-				private router: Router,
-				private route: ActivatedRoute,
-				private toastrService: ToastrService) { }
+		private router: Router,
+		private route: ActivatedRoute,
+		private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		if (this.chatService.checkIfSignedIn()) {
@@ -61,13 +61,14 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 			}
 		});
 
-		this.chatService.checkForJoinOrLeaveRoom(this.roomID).subscribe((InfoAndUser) => {
-			const whatHappened = InfoAndUser.info;
-			const user = InfoAndUser.user;
+		this.chatService.checkForJoinOrLeaveRoom(this.roomID).subscribe((InfoAndUserAndRoom) => {
+			const whatHappened = InfoAndUserAndRoom.info;
+			const user = InfoAndUserAndRoom.user;
+			const room = InfoAndUserAndRoom.room;
 			if (whatHappened === 'join') {
-				this.toastrService.info(user + ' joined the room', 'Join message');
+				this.toastrService.info(user + ' joined the room ' + room, 'Join message');
 			} else if (whatHappened === 'part' || whatHappened === 'quit') {
-				this.toastrService.info(user + ' left the room', 'Leaving message');
+				this.toastrService.info(user + ' left the room ' + room, 'Leaving message');
 			}
 		});
 	}
