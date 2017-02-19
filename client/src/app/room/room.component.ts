@@ -16,6 +16,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	users: string[];
 	ops: string[];
 	username: string;
+	IAmAnOp = false;
 	banOrKick: string;
 	constructor(private chatService: ChatService,
 				private router: Router,
@@ -32,6 +33,11 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		this.chatService.getUserList(this.roomID).subscribe(lists => {
 			this.users = lists.usersList;
 			this.ops = lists.opsList;
+			for (let i = 0; i < this.ops.length; i++) {
+				if (this.ops[i] === this.chatService.userName) {
+					this.IAmAnOp = true;
+				}
+			}
 		});
 		this.chatService.redirectKickedPerson(this.roomID).subscribe(user => {
 			if (this.chatService.userName === user) {
