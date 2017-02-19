@@ -21,7 +21,7 @@ export class RoomListComponent implements OnInit {
 
 	ngOnInit() {
 		console.log('username', this.chatService.userName);
-		if (this.chatService.checkIfSignedIn()){
+		if (this.chatService.checkIfSignedIn()) {
 			this.router.navigate(['login']);
 		}
 		this.chatService.getRoomList().subscribe(roomList => {

@@ -200,10 +200,8 @@ export class ChatService {
 		this.socket.emit('partroom', roomID);
 	}
 
-	disconnectFrom(){
-		console.log("disconnect From");
+	disconnectFrom() {
 		this.socket.emit('disconnect');
-		console.log("eftir disconnect");
 	}
 
 	checkIfSignedIn(): boolean {
