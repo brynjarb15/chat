@@ -19,7 +19,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	banOrKick: string;
 	constructor(private chatService: ChatService,
 				private router: Router,
-				private route: ActivatedRoute, 
+				private route: ActivatedRoute,
 				private toastrService: ToastrService) { }
 
 	ngOnInit() {
@@ -36,8 +36,8 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		this.chatService.redirectKickedPerson(this.roomID).subscribe(user => {
 			if (this.chatService.userName === user) {
 				this.toastrService.warning('You got kicked out of the room ' + this.roomID, 'Kick message');
-				this.router.navigate(["../rooms"]);
-				
+				this.router.navigate(['../rooms']);
+
 			} else {
 				this.toastrService.info(user + ' got kicked out of the room', 'Kick message');
 			}
@@ -47,7 +47,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 			console.log(this.chatService.userName);
 			if (this.chatService.userName === user) {
 				this.toastrService.error('You got banned from the room ' + this.roomID, 'Ban message');
-				this.router.navigate(["../rooms"]);
+				this.router.navigate(['../rooms']);
 			} else {
 				this.toastrService.info(user + ' got banned from the room', 'Ban message');
 			}
