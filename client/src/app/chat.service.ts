@@ -205,5 +205,26 @@ export class ChatService {
 		this.socket.emit('disconnect');
 		console.log("eftir disconnect");
 	}
+
+	checkIfSignedIn(): boolean {
+		return this.userName === undefined;
+	}
+
+	checkForJoinOrLeaveRoom(roomName: string): Observable<any> {
+		const observable = new Observable(observer => {
+			this.socket.on('servermessage', (info, room, userJoining) => {
+					if (roomName === room) {
+						if (this.userName !== userJoining) {
+							const param = {
+								info: info,
+								user: userJoining
+							};
+							observer.next(param);
+						}
+					}
+			});
+		});
+		return observable;
+	}
 }
 

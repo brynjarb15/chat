@@ -24,7 +24,9 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 				private toastrService: ToastrService) { }
 
 	ngOnInit() {
-		console.log(this.banOrKick);
+		if (this.chatService.checkIfSignedIn()) {
+			this.router.navigate(['login']);
+		}
 		this.roomID = this.route.snapshot.params['id'];
 
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
@@ -56,6 +58,16 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 				this.router.navigate(['../rooms']);
 			} else {
 				this.toastrService.info(user + ' got banned from the room', 'Ban message');
+			}
+		});
+
+		this.chatService.checkForJoinOrLeaveRoom(this.roomID).subscribe((InfoAndUser) => {
+			const whatHappened = InfoAndUser.info;
+			const user = InfoAndUser.user;
+			if (whatHappened === 'join') {
+				this.toastrService.info(user + ' joined the room', 'Join message');
+			} else if (whatHappened === 'part' || whatHappened === 'quit') {
+				this.toastrService.info(user + ' left the room', 'Leaving message');
 			}
 		});
 	}

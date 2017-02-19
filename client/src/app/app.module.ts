@@ -39,8 +39,7 @@ import { ChatService } from './chat.service';
 		}, {
 			path: 'rooms/:id',
 			component: RoomComponent
-		}
-		])
+		},])
 	],
 	providers: [ChatService],
 	bootstrap: [AppComponent]

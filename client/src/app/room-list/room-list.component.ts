@@ -20,6 +20,10 @@ export class RoomListComponent implements OnInit {
 
 
 	ngOnInit() {
+		console.log('username', this.chatService.userName);
+		if (this.chatService.checkIfSignedIn()){
+			this.router.navigate(['login']);
+		}
 		this.chatService.getRoomList().subscribe(roomList => {
 			this.rooms = roomList;
 		});
@@ -63,6 +67,6 @@ export class RoomListComponent implements OnInit {
 
 	disconnectFromApp() {
 		this.chatService.disconnectFrom();
-		this.router.navigate(['../login']);
+		this.router.navigate(['login']);
 	}
 }
