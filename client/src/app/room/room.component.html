@@ -5,7 +5,7 @@
 			<div>{{message.nick}}: {{message.message}}</div>
 		</li>
 	</ul>
-	<input class="aMessage" [(ngModel)] ="newMessage" />
+	<input class="aMessage" [(ngModel)]="newMessage" />
 	<button class="btn btn-default" (click)="sendMessage()">Send message</button>
 	<div class="disconnectAndBack">
 		<button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
@@ -34,4 +34,3 @@
 	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
 	<button class="btn btn-default" (click)="ban()">Ban</button>
 </div>
-

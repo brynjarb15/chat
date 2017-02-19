@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-room-list',
 	templateUrl: './room-list.component.html',
@@ -16,7 +16,7 @@ export class RoomListComponent implements OnInit {
 	newestPrivateMessage: string;
 
 	constructor(private chatService: ChatService,
-				private router: Router) { }
+		private router: Router) { }
 
 
 	ngOnInit() {
@@ -39,7 +39,7 @@ export class RoomListComponent implements OnInit {
 
 	sendPrivateMsg() {
 		this.chatService.sendPrivateMessage(this.sendPrivateMessageTo, this.privateMessage).subscribe(succeeded => {
-			if ( succeeded ) {
+			if (succeeded) {
 				console.log('Private message was sent to', this.sendPrivateMessageTo);
 			} else {
 				console.log('Private message was not sent to ', this.sendPrivateMessageTo);
@@ -53,7 +53,7 @@ export class RoomListComponent implements OnInit {
 			return;
 		}
 		this.chatService.addRoom(this.newRoomName).subscribe(succeeded => {
-			if ( succeeded === true ) {
+			if (succeeded === true) {
 				this.router.navigate(['rooms', this.newRoomName]);
 			}
 		});

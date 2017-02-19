@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
-import { ToastrService, ToastContainerDirective, ToastrConfig} from 'ngx-toastr';
+import { ToastrService, ToastContainerDirective, ToastrConfig } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-root',
@@ -14,9 +14,9 @@ export class AppComponent implements OnInit {
 	title = 'app works!';
 
 	constructor(private chatService: ChatService,
-				private toastrService: ToastrService,
-				private toastrConfig: ToastrConfig) {
-					toastrConfig.preventDuplicates = true;
+		private toastrService: ToastrService,
+		private toastrConfig: ToastrConfig) {
+		toastrConfig.preventDuplicates = true;
 	}
 
 	ngOnInit() {

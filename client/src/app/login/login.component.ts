@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 	loginFailed = false;
 
 	constructor(private chatService: ChatService,
-							private router: Router) {
+				private router: Router) {
 
 	}
 
