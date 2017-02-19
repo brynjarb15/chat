@@ -54,10 +54,6 @@ export class ChatService {
 		return observable;
 	}
 
-	disconnectFromChatRoom(roomID: any) {
-		this.socket.emit('partroom', roomID);
-	}
-
 	getUserList(roomName: string): Observable<any> {
 		console.log('getuserlist function!');
 		const observable = new Observable(observer => {
@@ -198,6 +194,16 @@ export class ChatService {
 			});
 		});
 		return observable;
+	}
+
+	disconnectFromChatRoom(roomID: any) {
+		this.socket.emit('partroom', roomID);
+	}
+
+	disconnectFrom(){
+		console.log("disconnect From");
+		this.socket.emit('disconnect');
+		console.log("eftir disconnect");
 	}
 }
 

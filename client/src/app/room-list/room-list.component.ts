@@ -61,4 +61,8 @@ export class RoomListComponent implements OnInit {
 		this.onNewRoom();
 	}
 
+	disconnectFromApp() {
+		this.chatService.disconnectFrom();
+		this.router.navigate(['../login']);
+	}
 }

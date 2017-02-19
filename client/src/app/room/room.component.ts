@@ -88,4 +88,8 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 			}
 		});
 	}
+	disconnectFromApp() {
+		this.chatService.disconnectFrom();
+		this.router.navigate(['../login']);
+	}
 }
