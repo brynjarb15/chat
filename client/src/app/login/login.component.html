@@ -1,6 +1,7 @@
-<input [(ngModel)]="userName" />
+<p>Please enter a username to login</p>
+<input class="loginInput" [(ngModel)]="userName" />
 <button class="btn btn-default" (click)="onLogin()">Login</button>
 <!--<div *ngIf="loginFailed">-->
 <div [hidden]="!loginFailed">
-  Sorry, but this username is already taken
+Sorry, but this username is already taken
 </div>

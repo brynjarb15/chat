@@ -11,6 +11,9 @@ export class RoomListComponent implements OnInit {
 	rooms: string[];
 	allUsers: string[];
 	newRoomName = '';
+	privateMessage: string;
+	sendPrivateMessageTo: string;
+	newestPrivateMessage: string;
 
 	constructor(private chatService: ChatService,
 				private router: Router) { }
@@ -24,9 +27,21 @@ export class RoomListComponent implements OnInit {
 		this.chatService.getAllUsers().subscribe(userList => {
 			this.allUsers = userList;
 		});
+
+		this.chatService.listenForPrivateMessage().subscribe(message => {
+			this.newestPrivateMessage = message;
+		});
 	}
 
-
+	sendPrivateMsg() {
+		this.chatService.sendPrivateMessage(this.sendPrivateMessageTo, this.privateMessage).subscribe(succeeded => {
+			if ( succeeded ) {
+				console.log('Private message was sent to', this.sendPrivateMessageTo);
+			} else {
+				console.log('Private message was not sent to ', this.sendPrivateMessageTo);
+			}
+		});
+	}
 	onNewRoom() {
 		if (this.newRoomName.length < 1) {
 			// give user feedback about the error

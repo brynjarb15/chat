@@ -1,7 +1,27 @@
 #messageHistory {
-	height:100px; 
-	width:30%;
+	height:200%; 
+	width:100%;
 	overflow:hidden;
 	overflow-y:scroll;
 }
-
+.usersandops{
+	float:left;
+	margin-left: 5%;
+}
+.messages{
+	float:left;
+}
+.kickBan{
+	margin-top: 20%;
+	margin-bottom: 5px;
+}
+.kOrbInput{
+	height: 32px;
+	border-radius: 5px;
+	border: 1px solid lightgrey;
+}
+.aMessage{
+	height: 32px;
+	border-radius: 5px;
+	border: 1px solid lightgrey;
+}

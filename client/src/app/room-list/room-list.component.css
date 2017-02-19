@@ -1,0 +1,28 @@
+.themessage{
+	margin-right:50%;
+}
+.availableRooms{
+	float: left;
+}
+.onlineUsers{
+	float:left;
+}
+.privateMessages{
+	float:left;
+	margin-left: 5%;
+}
+.privateInput{
+	border-radius: 5px;
+	height: 30px;
+	border: 1px solid lightgrey;
+	margin-bottom: 4px;
+}
+.allUserInPrivate{
+	height:29px;
+	border-radius: 5px;
+}
+.roomNameInput{
+	height: 32px;
+	border-radius: 5px;
+	border: 1px solid lightgrey;
+}

@@ -1,47 +1,34 @@
-<h2>This is {{roomID}}</h2>
+<h3>This is {{roomID}}</h3>
+<div class="messages">
+	<ul id="messageHistory">
+		<li class="themessage" *ngFor="let message of messageHistory">
+			<div>{{message.nick}}: {{message.message}}</div>
+		</li>
+	</ul>
+	<input class="aMessage" [(ngModel)] ="newMessage" />
+	<button class="btn btn-default" (click)="sendMessage()">Send message</button>
+</div>
 
-<div>Ops</div>
-<ul>
-	<li *ngFor="let op of ops">
-		<div>{{op}}</div>
-	</li>
-</ul>
-
-<div>Users</div>
-<ul>
-	<li *ngFor="let user of users">
-		<div>{{user}}</div>
-	</li>
-</ul>
-<button class="btn btn-default" (click)="back()">Leave</button>
-<input [(ngModel)] ="newMessage" />
-<button class="btn btn-default" (click)="sendMessage()">Send message</button>
-
-<ul id="messageHistory">
-	<li *ngFor="let message of messageHistory">
-		<div>{{message.nick}}: {{message.message}}</div>
-	</li>
-</ul>
-
-<div>
-	<select [(ngModel)]="banOrKick">
+<div class="usersandops">
+	<h3>Active in Room</h3>
+	<div>Ops</div>
+	<ul>
+		<li *ngFor="let op of ops">
+			<div>{{op}}</div>
+		</li>
+	</ul>
+	<div>Users</div>
+	<ul>
+		<li *ngFor="let user of users">
+			<div>{{user}}</div>
+		</li>
+	</ul>
+</div>
+<div class="kickBan">
+	<select class="kOrbInput" [(ngModel)]="banOrKick">
 		<option *ngFor="let user of users" [value]="user">{{user}}</option>
 	</select>
 	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
 	<button class="btn btn-default" (click)="ban()">Ban</button>
+	<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
 </div>
-
-
-
-
-<!--div *ngIf="true">
-	<br>
-	<input [(ngModel)] ="banOrKick" placeholder="Username"/><br>
-	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
-</div-->
-
-<!--div *ngIf="true">
-	<br>
-	<input [(ngModel)] ="banThisPerson" placeholder="Username"/><br>
-	<button class="btn btn-default" (click)="ban()">Ban</button>
-</div-->
