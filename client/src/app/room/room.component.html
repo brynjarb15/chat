@@ -7,8 +7,11 @@
 	</ul>
 	<input class="aMessage" [(ngModel)] ="newMessage" />
 	<button class="btn btn-default" (click)="sendMessage()">Send message</button>
+	<div class="disconnectAndBack">
+		<button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
+		<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
+	</div>
 </div>
-
 <div class="usersandops">
 	<h3>Active in Room</h3>
 	<div>Ops</div>
@@ -31,6 +34,4 @@
 	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
 	<button class="btn btn-default" (click)="ban()">Ban</button>
 </div>
-<button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
-<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
 
