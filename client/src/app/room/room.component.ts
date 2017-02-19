@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
+import { ToastrService, ToastContainerDirective, ToastrConfig} from 'ngx-toastr';
 
 @Component({
 	selector: 'app-room',
@@ -23,7 +24,8 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	
 	constructor(private chatService: ChatService,
 				private router: Router,
-				private route: ActivatedRoute) { }
+				private route: ActivatedRoute, 
+				private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.roomID = this.route.snapshot.params['id'];
@@ -38,19 +40,20 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		this.chatService.redirectKickedPerson(this.roomID, this.kickThisPersonOut).subscribe(user => {
 			console.log(this.chatService.userName);
 			if (this.chatService.userName === user) {
+				this.toastrService.warning('You got kicked out of the room ' + this.roomID, 'Kick message');
 				this.router.navigate(["../rooms"]);
-			}
-			else {
-				//TODO: láta alla vita
+				
+			} else {
+				this.toastrService.info(user + ' got kicked out of the room', 'Kick message');
 			}
 		});
 		this.chatService.redirectBannedPerson(this.roomID, this.banThisPerson).subscribe(user => {
 			console.log(this.chatService.userName);
 			if (this.chatService.userName === user) {
+				this.toastrService.error('You got banned from the room ' + this.roomID, 'Ban message');
 				this.router.navigate(["../rooms"]);
-			}
-			else {
-				//TODO: láta alla vita
+			} else {
+				this.toastrService.info(user + ' got banned from the room', 'Ban message');
 			}
 		});
 	}
@@ -61,7 +64,6 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	}
 
 	sendMessage() {
-		console.log('before send message');
 		this.chatService.sendMessage(this.roomID, this.newMessage);
 		this.newMessage = '';
 	}
@@ -69,11 +71,6 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	back(){
 		this.chatService.disconnectFromChatRoom(this.roomID);
 		this.router.navigate(["../rooms"]);
-		/*this.chatService.getUserList(this.roomID).subscribe(lis => {
-			this.users = lis;
-		});
-		});*/
-		//this.currentOPS = this.route.snapshot.params['ops']
 		console.log("back: ",this.users);
 	}
 

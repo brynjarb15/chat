@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule} from '@angular/router';
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +22,8 @@ import { ChatService } from './chat.service';
 		BrowserModule,
 		FormsModule,
 		HttpModule,
+		ToastrModule.forRoot(),
+		ToastContainerModule.forRoot(),
 		RouterModule.forRoot([{
 			path: '',
 			redirectTo: 'login',
