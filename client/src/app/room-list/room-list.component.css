@@ -29,3 +29,13 @@
 .usersNoClikc{
 	pointer-events: none;
 }
+#userList{
+	height:15em; 
+}
+#roomList{
+	list-style-type:none;
+	padding-left: 0;
+}
+#privateMessages{
+	margin-right: 0;
+}

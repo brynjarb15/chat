@@ -1,18 +1,17 @@
-<div class="availableRooms">
+<div  class="availableRooms">
 	<h3>Available chatrooms</h3>
-	<ul>
+	<ul id="roomList">
 		<li *ngFor="let room of rooms">
-			<!--<a [routerLink]="['/rooms', room]">{{room}}</a>-->
 			<a (click)="joinRoom(room)">{{room}}</a>
 		</li>
 	</ul>
-	<input class="roomNameInput" [(ngModel)]="newRoomName" />
+	<input class="roomNameInput" [(ngModel)]="newRoomName" placeholder="Room name"/>
 	<button class="btn btn-default" (click)="onNewRoom()">Add new room</button>
 </div>
 <div class="onlineUsers">
 	<h3>All connected users</h3>
-	<ul>
-		<li *ngFor="let user of allUsers">
+	<ul id="userList" class="userlist light-border">
+		<li *ngFor="let user of allUsers" (click)="selectUser(user)">
 			<div>{{user}}</div>
 		</li>
 	</ul>
@@ -20,12 +19,15 @@
 <div class="privateMessages">
 	<h3>Private Chat</h3>
 	<select class="allUserInPrivate" [(ngModel)]="sendPrivateMessageTo">
-		<option *ngFor="let user of allUsers" [value]="user" placeholder="Name">{{user}}</option>
+		<option *ngFor="let user of allUsersExceptCurrent" [value]="user" placeholder="Name">{{user}}</option>
 	</select>
-	<input class="privateInput" [(ngModel)]="privateMessage" placeholder="Message" /><br>
+	<input class="privateInput" [(ngModel)]="privateMessage" placeholder="Message" placeholder="Private message"/><br>
 	<button class="btn btn-default" (click)="sendPrivateMsg()">Send</button>
 
-	<div>Private message</div>
-	<div>{{newestPrivateMessage}}</div>
+	<h5>Private messages:</h5>
+	<ul id="privateMessages">
+		<li id="privateMessages" class="themessage" *ngFor="let message of privateMessages">
+			<div>{{message.fromUser}}: {{message.message}}</div>
+		</li>
+	</ul>
 </div>
-<button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>

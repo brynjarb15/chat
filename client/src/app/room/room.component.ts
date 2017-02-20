@@ -11,13 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 export class RoomComponent implements OnInit, AfterViewChecked {
 
 	roomID: string;
-	newMessage: string;
+	newMessage = '';
 	messageHistory: any;
 	users: string[];
 	ops: string[];
-	username: string;
+	allUsers: string[];
 	IAmAnOp = false;
-	banOrKick: string;
+	selectedUser: string;
+
 	constructor(private chatService: ChatService,
 		private router: Router,
 		private route: ActivatedRoute,
@@ -27,37 +28,56 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		if (this.chatService.checkIfSignedIn()) {
 			this.router.navigate(['login']);
 		}
+
 		this.roomID = this.route.snapshot.params['id'];
 
 		this.chatService.getMessageHistory(this.roomID).subscribe(msgHistory => {
 			this.messageHistory = msgHistory;
 		});
-		this.chatService.getUserList(this.roomID).subscribe(lists => {
+
+		this.chatService.getUserListForRoom(this.roomID).subscribe(lists => {
 			this.users = lists.usersList;
 			this.ops = lists.opsList;
+			this.allUsers = this.ops.concat(this.users);
 			for (let i = 0; i < this.ops.length; i++) {
 				if (this.ops[i] === this.chatService.userName) {
 					this.IAmAnOp = true;
+					break;
 				}
 			}
 		});
-		this.chatService.redirectKickedPerson(this.roomID).subscribe(user => {
+
+		this.chatService.kickedPerson(this.roomID).subscribe(user => {
 			if (this.chatService.userName === user) {
 				this.toastrService.warning('You got kicked out of the room ' + this.roomID, 'Kick message');
-				this.router.navigate(['../rooms']);
+				this.router.navigate(['rooms']);
 
 			} else {
 				this.toastrService.info(user + ' got kicked out of the room', 'Kick message');
 			}
 
 		});
-		this.chatService.redirectBannedPerson(this.roomID).subscribe(user => {
-			console.log(this.chatService.userName);
+
+		this.chatService.bannedPerson(this.roomID).subscribe(user => {
 			if (this.chatService.userName === user) {
 				this.toastrService.error('You got banned from the room ' + this.roomID, 'Ban message');
-				this.router.navigate(['../rooms']);
+				this.router.navigate(['rooms']);
 			} else {
 				this.toastrService.info(user + ' got banned from the room', 'Ban message');
+			}
+		});
+
+		this.chatService.checkIfOpped(this.roomID).subscribe(user => {
+			if (this.chatService.userName === user) {
+				this.toastrService.success('You got opped in the room ' + this.roomID, 'Op message');
+				this.IAmAnOp = true;
+			}
+		});
+
+		this.chatService.checkIfDeOpped(this.roomID).subscribe(user => {
+			if (this.chatService.userName === user) {
+				this.toastrService.warning('You got deopped in the room ' + this.roomID, 'Op message');
+				this.IAmAnOp = false;
 			}
 		});
 
@@ -74,6 +94,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 	}
 
 	ngAfterViewChecked() {
+		// Keep the scrollbar at the bottom so you can see the newest messages
 		const objDiv = document.getElementById('messageHistory');
 		objDiv.scrollTop = objDiv.scrollHeight;
 	}
@@ -83,32 +104,57 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		this.newMessage = '';
 	}
 
-	back() {
-		this.chatService.disconnectFromChatRoom(this.roomID);
-		this.router.navigate(['../rooms']);
-		console.log('back: ', this.users);
-	}
-
-	getUsers() {
-		this.router.navigate(['rooms', this.roomID, 'users']);
+	leaveChatRoom() {
+		this.chatService.leaveChatRoom(this.roomID);
+		this.router.navigate(['rooms']);
 	}
 
 	kickOut() {
-		this.chatService.kickPersonOut(this.banOrKick, this.roomID).subscribe(succeeded => {
+		this.chatService.kickPersonOut(this.selectedUser, this.roomID).subscribe(succeeded => {
 			if (succeeded) {
-				console.log(this.banOrKick, ' has been kicked out');
+				console.log(this.selectedUser, ' has been kicked out');
+			} else {
+				this.toastrService.warning('Failed to kick out ' + this.selectedUser);
 			}
 		});
 	}
+
 	ban() {
-		this.chatService.banPerson(this.banOrKick, this.roomID).subscribe(succeeded => {
+		this.chatService.banPerson(this.selectedUser, this.roomID).subscribe(succeeded => {
 			if (succeeded) {
-				console.log(this.banOrKick, ' has been banned');
+				console.log(this.selectedUser, ' has been banned');
+			} else {
+				this.toastrService.warning('Failed to ban ' + this.selectedUser);
 			}
 		});
 	}
-	disconnectFromApp() {
-		this.chatService.disconnectFrom();
-		this.router.navigate(['../login']);
+
+	selectUser(user: string) {
+		this.selectedUser = user;
 	}
+
+	// make someone an op
+	op() {
+		this.chatService.makeOp(this.roomID, this.selectedUser).subscribe(succeeded => {
+			if (succeeded) {
+				this.toastrService.success(this.selectedUser, ' has been made op');
+				console.log(this.selectedUser, ' has been made op');
+			} else {
+				this.toastrService.warning('Failed to make ' + this.selectedUser + ' an op');
+			}
+		});
+	}
+
+	//remove someone from op
+	deOp() {
+		this.chatService.removeFromOp(this.roomID, this.selectedUser).subscribe(succeeded => {
+			if (succeeded) {
+				this.toastrService.success(this.selectedUser, ' has been removed from op');
+				console.log(this.selectedUser, ' has been removed from op');
+			} else {
+				this.toastrService.warning('Failed to remove ' + this.selectedUser + ' from op');
+			}
+		});
+	}
+
 }

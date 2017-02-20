@@ -1,6 +1,6 @@
-.disconnectAndBack{
+.back{
 	float: bottom;
-	margin-top: 10em;
+	margin-top: 5em;
 }
 #messageHistory {
 	height:20em; 
@@ -15,19 +15,19 @@
 .messages{
 	float:left;
 }
-.kickBan{
+.userOperations{
 	float: left;
 	margin-top: 15px;
 	margin-left: 40px;
 }
-.kOrbInput{
+.userOperationsInputk{
 	height: 32px;
 	border-radius: 5px;
-	border: 1px solid lightgrey;
 }
 .aMessage{
 	height: 32px;
 	width: 21em;
 	border-radius: 5px;
-	border: 1px solid lightgrey;
+	
 }
+

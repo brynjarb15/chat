@@ -1,36 +1,37 @@
 <h3>This is {{roomID}}</h3>
 <div class="messages">
-	<ul id="messageHistory">
+	<ul id="messageHistory" class="light-border">
 		<li class="themessage" *ngFor="let message of messageHistory">
 			<div>{{message.nick}}: {{message.message}}</div>
 		</li>
 	</ul>
-	<input class="aMessage" [(ngModel)]="newMessage" />
+	<input class="aMessage light-border" [(ngModel)]="newMessage" placeholder="New message"/>
 	<button class="btn btn-default" (click)="sendMessage()">Send message</button>
-	<div class="disconnectAndBack">
-		<button class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
-		<button class="btn btn-default" (click)="back()">Leave Chatroom</button>
+	<div class="back">
+		<button class="btn btn-default" (click)="leaveChatRoom()">Leave Chatroom</button>
 	</div>
 </div>
 <div class="usersandops">
 	<h3>Active in Room</h3>
-	<div>Ops</div>
-	<ul>
-		<li *ngFor="let op of ops">
+	<h4>Ops</h4>
+	<ul class="userlist light-border">
+		<li *ngFor="let op of ops" (click)="selectUser(op)">
 			<div>{{op}}</div>
 		</li>
 	</ul>
-	<div>Users</div>
-	<ul>
-		<li *ngFor="let user of users">
-			<div>{{user}}</div>
+	<h4>Users</h4>
+	<ul class="userlist light-border">
+		<li *ngFor="let user of users" (click)="selectUser(user)">
+			<div >{{user}}</div>
 		</li>
 	</ul>
 </div>
-<div class="kickBan" *ngIf="IAmAnOp">
-	<select class="kOrbInput" [(ngModel)]="banOrKick">
-		<option *ngFor="let user of users" [value]="user">{{user}}</option>
+<div class="userOperations" *ngIf="IAmAnOp">
+	<select class="userOperationsInput light-border" [(ngModel)]="selectedUser">
+		<option *ngFor="let user of allUsers" [value]="user">{{user}}</option>
 	</select>
 	<button class="btn btn-default" (click)="kickOut()">Kick Out</button>
 	<button class="btn btn-default" (click)="ban()">Ban</button>
+	<button class="btn btn-default" (click)="op()">Make Op</button>
+	<button class="btn btn-default" (click)="deOp()">Remove from Op</button>
 </div>

@@ -16,7 +16,7 @@ var users = {};
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
 
-
+//--------bætti við þessu --------------------
 //Took this code from down below and put it into a function so it would not have to be repeated
 function getUsersAsList() {
 		//console.log('is this working');
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
 			console.log("User added: " + username);
 			fn(true); // Callback, user name was available
 			
-			
+			//--------bætti við þessu --------------------
 			//Added this so the userlist will be refreshed when someone is logged in
 			const userlist = getUsersAsList();
 			io.sockets.emit('userlist', userlist);
@@ -185,8 +185,37 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.emit('servermessage', "part", room, socket.username);
 	});
 
+	//--------bætti við þessu --------------------
+	//bætti þessu við eftir að einhver nefndi þetta á piazza
+	socket.on('disconnect', quit);
+	socket.on('quit', quit);
+
+	function quit() {
+		if(socket.username) {
+			//If the socket doesn't have a username the client joined and parted without
+			//chosing a username, so we just close the socket without any cleanup.
+			for(var room in users[socket.username].channels) {
+				//Remove the user from users/ops lists in the rooms he's currently in.
+				delete rooms[room].users[socket.username];
+				delete rooms[room].ops[socket.username];
+				io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+			}
+
+			//Broadcast the the user has left the channels he was in.
+			io.sockets.emit('servermessage', "quit", users[socket.username].channels, socket.username);
+			//Remove the user from the global user roster.
+			delete users[socket.username];
+
+			//--------bætti við þessu --------------------
+			//bætti við til að uppfæra notendalistann í room-list
+			const userlist = getUsersAsList();
+			io.sockets.emit('userlist', userlist);
+	
+
+		}
+	}
 	// when the user disconnects.. perform this
-	socket.on('disconnect', function(){
+	/*socket.on('disconnect', function(){
 		if(socket.username) {
 			//If the socket doesn't have a username the client joined and parted without
 			//chosing a username, so we just close the socket without any cleanup.
@@ -202,7 +231,7 @@ io.sockets.on('connection', function (socket) {
 			//Remove the user from the global user roster.
 			delete users[socket.username];
 		}
-	});
+	});*/
 
 	//When a user tries to kick another user this gets performed.
 	socket.on('kick', function (kickObj, fn) {

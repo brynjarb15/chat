@@ -2,5 +2,9 @@
 <h1>
 	Chat App
 </h1>
+<div *ngIf="loggedIn">
+	You are {{username}}
+</div>
+<button *ngIf="loggedIn" id="disconnectButton" class="btn btn-default" (click)="disconnectFromApp()">Disconnect</button>
 
 <router-outlet></router-outlet>
