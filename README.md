@@ -18,3 +18,4 @@
 Þá er hægt að opna vafra að eigin vali og fara inn á slóðina [http://www.localhost:4200](http://www.localhost:4200) og opnast login síðan inn á chat appið.
 
 Server skránni var breytt við vinnslu verkefnisins og fylgir hún því með verkefninu.
+Commentað var við þá parta þar sem henni var breytt.

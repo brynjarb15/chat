@@ -145,7 +145,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
 		});
 	}
 
-	//remove someone from op
+	// remove someone from op
 	deOp() {
 		this.chatService.removeFromOp(this.roomID, this.selectedUser).subscribe(succeeded => {
 			if (succeeded) {
