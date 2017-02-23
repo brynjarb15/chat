@@ -1,4 +1,7 @@
 #Read me
+
+Þetta er verkefni sem við gerðum í áfanganum Vefforritun II á vorönn 2017 í Háskólanum í Reykjavík
+
 ##Forritið keyrt
 Þegar keyra á forritið þarf að hafa nýjustu útgáfu af Node.js í tölvunni. Þá þarf að opna command prompt glugga og ná í nauðsynlega pakka. Það er gert með því að keyra eftirfarandi skipun bæðí inn í möppu sem heitir client og í möppu sem heitir server:
 
